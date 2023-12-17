@@ -6,6 +6,8 @@ import { DatabaseModule } from './db/database.module';
 import { JwtStrategy } from './middleware/jwt.strategy';
 import { ConfigModule } from '@nestjs/config';
 import { LivestockModule } from './livestock/livestock.module';
+import { JwtAuthGuard } from 'src/middleware/jwt.guard';
+
 
 
 @Module({
@@ -14,6 +16,6 @@ import { LivestockModule } from './livestock/livestock.module';
             ConfigModule.forRoot(), 
             LivestockModule],
   controllers: [AppController],
-  providers: [AppService, JwtStrategy],
+  providers: [AppService, JwtStrategy, JwtAuthGuard],
 })
 export class AppModule {}
