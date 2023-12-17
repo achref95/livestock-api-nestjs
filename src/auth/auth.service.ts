@@ -76,7 +76,6 @@ export class AuthService {
   async verifyToken(token: string): Promise<{ payload: any }> {
     try {
       const decoded = jwt.verify(token, process.env.TOKEN_SECRET, { algorithms: ['HS256'] });
-      console.log("decode:", decoded)
       return { payload: decoded };
     } catch (error) {
       throw new UnauthorizedException('Token verification failed');
