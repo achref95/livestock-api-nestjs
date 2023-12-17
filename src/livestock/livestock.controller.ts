@@ -16,7 +16,7 @@ export class LivestockController {
       return { statusCode: 201, message: 'Live stock created successfully', LiveStock: result };
     } catch (error) {
       console.error(error);
-      return { statusCode: 500, message: 'Internal Server Error' };
+      return { statusCode: 500, message: error.message };
     }
   }
 
