@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Post, Body } from '@nestjs/common';
+import { Controller, UseGuards, Get, Post, Body, Query } from '@nestjs/common';
 import { LivestockService } from './livestock.service';
 import { JwtAuthGuard } from 'src/middleware/jwt.guard';
 
@@ -19,4 +19,18 @@ export class LivestockController {
       return { statusCode: 500, message: 'Internal Server Error' };
     }
   }
+
+  @Get('getone')
+  @UseGuards(JwtAuthGuard)
+  async getOne(@Query() query: { stockNumber: string }) {
+    try {
+      const { stockNumber } = query;
+      const result = await this.livestockService.getOne(stockNumber);
+      return { statusCode: 200, ls: result };
+    } catch (error) {
+      console.error(error);
+      return { statusCode: 500, message: 'Internal Server Error' };
+    }
+  }
+  
 }
