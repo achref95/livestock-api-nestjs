@@ -32,5 +32,16 @@ export class LivestockController {
       return { statusCode: 500, message: 'Internal Server Error' };
     }
   }
+
+  @Get('getls')
+  @UseGuards(JwtAuthGuard)
+  async getLs() {
+    try {
+      const result = await this.livestockService.getLs()
+      return { statusCode: 200, LiveStock: result}
+    } catch (error) {
+      console.log(error)
+    }
+  }
   
 }

@@ -27,4 +27,17 @@ export class LivestockService {
     }
     return result;
   }
+
+  async getLs() {
+    try {
+      const result = await this.liveStockModel.find()
+      if (!result || result.length === 0) {
+        throw new NotFoundException('No cattles found in the database');
+      }
+
+      return result
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
