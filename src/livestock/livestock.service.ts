@@ -32,7 +32,8 @@ export class LivestockService {
     try {
       const result = await this.liveStockModel.find()
       if (!result || result.length === 0) {
-        throw new NotFoundException('No cattles found in the database');
+        // throw new NotFoundException('No cattles found in the database');
+        return { statusCode: 400, message: 'No cattle found in the database' };
       }
 
       return result

@@ -29,7 +29,7 @@ export class LivestockController {
       return { statusCode: 200, ls: result };
     } catch (error) {
       console.error(error);
-      return { statusCode: 500, message: 'Internal Server Error' };
+      return { statusCode: 500, message: error.message };
     }
   }
 
