@@ -36,7 +36,7 @@ export class LivestockService {
         return { statusCode: 400, message: 'No cattle found in the database' };
       }
 
-      return result
+      return {result: result, total: result.length}
     } catch (error) {
       console.log(error)
     }

@@ -38,7 +38,7 @@ export class LivestockController {
   async getLs() {
     try {
       const result = await this.livestockService.getLs()
-      return { statusCode: 200, LiveStock: result}
+      return { statusCode: 200, LiveStock: result, Total: result.total}
     } catch (error) {
       console.log(error)
     }
