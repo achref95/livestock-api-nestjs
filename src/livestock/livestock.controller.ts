@@ -9,10 +9,10 @@ export class LivestockController {
 
   @Post('addls')
   @UseGuards(JwtAuthGuard)
-  async addLs(@Body() body: { stockNumber: string; stockType: string }) {
+  async addLs(@Body() body: { stockNumber: string; stockType: string; comment: string }) {
     try {
-      const { stockNumber, stockType } = body;
-      const result = await this.livestockService.addLs(stockNumber, stockType);
+      const { stockNumber, stockType, comment } = body;
+      const result = await this.livestockService.addLs(stockNumber, stockType, comment);
       return { statusCode: 201, message: 'Live stock created successfully', LiveStock: result };
     } catch (error) {
       console.error(error);
