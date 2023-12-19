@@ -41,4 +41,17 @@ export class LivestockService {
       console.log(error)
     }
   }
+
+  async lsDetail(stockId: string): Promise<any> {
+    try {
+      const result = await this.liveStockModel.findById(stockId);
+      if (!result) {
+        throw new NotFoundException('No cattle with that ID found in the database');
+      }
+      return result;
+    } catch (error) {
+      console.error(error); // Use console.error for errors
+      throw new NotFoundException('No cattle with that ID found in the database');
+    }
+  }
 }
