@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { LiveStock, liveStockModel } from './livestock.model';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class LivestockService {
@@ -52,6 +53,24 @@ export class LivestockService {
     } catch (error) {
       console.error(error); // Use console.error for errors
       throw new NotFoundException('No cattle with that ID found in the database');
+    }
+  }
+
+  async updateLs(stockId: string, stockNumber: string, stockType: string, comment: string): Promise<any> {
+    try {
+      const result = await this.liveStockModel.findByIdAndUpdate(
+        stockId,
+          {
+            stockNumber: stockNumber,
+            stockType: stockType,
+            comment: comment 
+          },
+        { new: true }, // This option returns the updated document
+      );
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw new Error('Failed to update livestock');
     }
   }
 }

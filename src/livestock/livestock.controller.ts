@@ -56,4 +56,21 @@ export class LivestockController {
     }
   }
   
+  @Put('getls/:stockId/update')
+  // @UseGuards(JwtAuthGuard)
+  async updateLs(
+    @Param('stockId') stockId: string,
+    @Body() body: { stockNumber: string; stockType: string; comment: string },
+  ) {
+    try {
+      const { stockNumber, stockType, comment } = body;
+
+      const result = await this.livestockService.updateLs(stockId, stockNumber, stockType, comment);
+      return { statusCode: 200, cattle: result };
+    } catch (error) {
+      console.log(error);
+      throw new Error('Failed to update livestock');
+    }
+  }
+  
 }
