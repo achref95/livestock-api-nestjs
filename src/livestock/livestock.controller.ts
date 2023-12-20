@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Get, Post, Put, Body, Query, Param } from '@nestjs/common';
+import { Controller, UseGuards, Get, Post, Put, Delete, Body, Query, Param, NotFoundException } from '@nestjs/common';
 import { LivestockService } from './livestock.service';
 import { JwtAuthGuard } from 'src/middleware/jwt.guard';
 
@@ -57,7 +57,7 @@ export class LivestockController {
   }
   
   @Put('getls/:stockId/update')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   async updateLs(
     @Param('stockId') stockId: string,
     @Body() body: { stockNumber: string; stockType: string; comment: string },
@@ -70,6 +70,18 @@ export class LivestockController {
     } catch (error) {
       console.log(error);
       throw new Error('Failed to update livestock');
+    }
+  }
+
+  @Delete('getls/:stockId/delete')
+  @UseGuards(JwtAuthGuard)
+  async deleteLs(@Param('stockId') stockId: string) {
+    try {
+      const result = await this.livestockService.deleteLs(stockId)
+      if (!result) throw new NotFoundException("Cattle not found")
+      return {statusCode: 200, message: "cattle has been deleted"}
+    } catch (error) {
+      console.log(error)
     }
   }
   

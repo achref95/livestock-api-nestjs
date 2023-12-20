@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { LiveStock, liveStockModel } from './livestock.model';
-import { Types } from 'mongoose';
 
 @Injectable()
 export class LivestockService {
@@ -71,6 +70,17 @@ export class LivestockService {
     } catch (error) {
       console.log(error);
       throw new Error('Failed to update livestock');
+    }
+  }
+
+  async deleteLs(stockId: string): Promise<any> {
+    try {
+      const result = await this.liveStockModel.findByIdAndDelete(stockId)
+      return result
+    } catch (error) {
+      console.log(error)
+      throw new Error('Failed to delete livestock');
+
     }
   }
 }
