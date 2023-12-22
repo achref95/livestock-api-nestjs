@@ -13,7 +13,7 @@ import { JwtAuthGuard } from 'src/middleware/jwt.guard';
 @Module({
   imports: [AuthModule,
             DatabaseModule, 
-            ConfigModule.forRoot(), 
+            ConfigModule.forRoot(), // Used to load environment variables, replaces the dotenv.config();
             LivestockModule],
   controllers: [AppController],
   providers: [AppService, JwtStrategy, JwtAuthGuard],
