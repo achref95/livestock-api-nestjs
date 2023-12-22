@@ -16,6 +16,6 @@ import { JwtAuthGuard } from 'src/middleware/jwt.guard';
             ConfigModule.forRoot(), // Used to load environment variables, replaces the dotenv.config();
             LivestockModule],
   controllers: [AppController],
-  providers: [AppService, JwtStrategy, JwtAuthGuard],
+  providers: [AppService, JwtStrategy, JwtAuthGuard], // Since the guard and strategy can be injected, they need to be put as providers
 })
 export class AppModule {}
