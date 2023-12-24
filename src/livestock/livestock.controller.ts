@@ -60,12 +60,12 @@ export class LivestockController {
   @UseGuards(JwtAuthGuard)
   async updateLs(
     @Param('stockId') stockId: string,
-    @Body() body: { stockNumber: string; stockType: string; comment: string },
+    @Body() body: { stockNumber: string; stockType: string; age: string; comment: string },
   ) {
     try {
-      const { stockNumber, stockType, comment } = body;
+      const { stockNumber, stockType, age, comment } = body;
 
-      const result = await this.livestockService.updateLs(stockId, stockNumber, stockType, comment);
+      const result = await this.livestockService.updateLs(stockId, stockNumber, stockType, age, comment);
       return { statusCode: 200, cattle: result };
     } catch (error) {
       console.log(error);

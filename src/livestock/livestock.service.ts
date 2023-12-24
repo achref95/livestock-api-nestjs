@@ -55,13 +55,14 @@ export class LivestockService {
     }
   }
 
-  async updateLs(stockId: string, stockNumber: string, stockType: string, comment: string): Promise<any> {
+  async updateLs(stockId: string, stockNumber: string, stockType: string, age: string, comment: string): Promise<any> {
     try {
       const result = await this.liveStockModel.findByIdAndUpdate(
         stockId,
           {
             stockNumber: stockNumber,
             stockType: stockType,
+            age: age,
             comment: comment 
           },
         { new: true }, // This option returns the updated document
