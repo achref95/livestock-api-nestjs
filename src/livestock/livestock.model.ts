@@ -9,6 +9,9 @@ export class LiveStock extends Document {
   @Prop({ required: true })
   stockType: string;
 
+  @Prop({ required: true })
+  age: string;
+
   @Prop()
   comment: string;
 }

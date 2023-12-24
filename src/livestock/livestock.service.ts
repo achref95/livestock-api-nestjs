@@ -7,12 +7,12 @@ import { LiveStock, liveStockModel } from './livestock.model';
 export class LivestockService {
   constructor(@InjectModel(LiveStock.name) private readonly liveStockModel: Model<LiveStock>) {}
 
-  async addLs(stockNumber: string, stockType: string, comment: string): Promise<LiveStock> {
-    if (!stockNumber || !stockType) {
-      throw new Error('Stock number or stock type not provided');
+  async addLs(stockNumber: string, stockType: string, age: string, comment: string): Promise<LiveStock> {
+    if (!stockNumber || !stockType || !age) {
+      throw new Error('Please probide full cattle details');
     }
 
-    const result = await this.liveStockModel.create({ stockNumber, stockType, comment });
+    const result = await this.liveStockModel.create({ stockNumber, stockType, age, comment });
     return result;
   }
 
