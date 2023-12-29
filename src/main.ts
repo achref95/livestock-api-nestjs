@@ -8,7 +8,7 @@ async function bootstrap() {
   // const app = await NestFactory.create<NestExpressApplication>(AppModule);
   // app.set('trust proxy', 1);
 
-  const FRONTEND_URL = process.env.ORIGIN || "http://localhost:5173";
+  const FRONTEND_URL = process.env.ORIGIN;
 
 
   // Enable CORS and allow all origins
@@ -21,7 +21,7 @@ async function bootstrap() {
 
   app.enableCors(corsOptions);
 
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT;
 
   await app.listen(PORT, () => {
     console.log(`Server listening on http://localhost:${PORT}`);
