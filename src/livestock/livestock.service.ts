@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { LiveStock, liveStockModel } from './livestock.model';
@@ -8,25 +8,44 @@ export class LivestockService {
   constructor(@InjectModel(LiveStock.name) private readonly liveStockModel: Model<LiveStock>) {}
 
   async addLs(stockNumber: string, stockType: string, age: string, comment: string): Promise<LiveStock> {
-    if (!stockNumber || !stockType || !age) {
-      throw new Error('Please probide full cattle details');
+    try {
+      if (!stockNumber || !stockType || !age) {
+        throw new BadRequestException('Please provide full cattle details');
+      }
+  
+      const result = await this.liveStockModel.create({ stockNumber, stockType, age, comment });
+  
+      if (!result) {
+        throw new NotFoundException('Failed to create LiveStock');
+      }
+  
+      return result;
+
+    } catch (error) {
+      console.log(error)
     }
 
-    const result = await this.liveStockModel.create({ stockNumber, stockType, age, comment });
-    return result;
   }
 
-  async getOne(stockNumber: string): Promise<LiveStock[]> {
+async getOne(stockNumber: string): Promise<LiveStock[]> {
+  try {
     if (!stockNumber) {
-      throw new Error('Stock number not provided')
+      throw new BadRequestException('Stock number not provided');
     }
 
-    const result = await this.liveStockModel.find({ stockNumber })
+    const result = await this.liveStockModel.find({ stockNumber });
+
     if (!result || result.length === 0) {
       throw new NotFoundException('No cattle found with that number');
     }
+
     return result;
+  } catch (error) {
+    // Log the error or handle it in some way
+    throw new InternalServerErrorException('Internal Server Error');
   }
+}
+
 
   async getLs() {
     try {
@@ -77,6 +96,10 @@ export class LivestockService {
   async deleteLs(stockId: string): Promise<any> {
     try {
       const result = await this.liveStockModel.findByIdAndDelete(stockId)
+
+      if (!result) {
+        return new NotFoundException('No cattle found with that Id number')
+      }
       return result
     } catch (error) {
       console.log(error)
